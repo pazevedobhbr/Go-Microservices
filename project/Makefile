@@ -1,10 +1,17 @@
 FRONT_END_BINARY=frontApp
 BROKER_BINARY=brokerApp
+BROKER_PRODUCTION_BINARY=brokerAppProd
 AUTH_BINARY=authApp
+AUTH_PRODUCTION_BINARY=authAppProd
 LOGGER_BINARY=loggerServiceApp
+LOGGER_PRODUCTION_BINARY=loggerServiceAppProd
 MAIL_BINARY=mailApp
+MAIL_PRODUCTION_BINARY=mailAppProd
 LISTENER_BINARY=listenerApp
-FRONT_BINARY=frontEndApp
+LISTENER_PRODUCTION_BINARY=listenerAppProd
+FRONT_PRODUCTION_BINARY=frontEndApp
+
+
 
 ## up: starts all containers in the background without forcing build
 up:
@@ -32,16 +39,46 @@ build_broker:
 	cd ../broker-service && env GOOS=linux CGO_ENABLED=0 go build -o ${BROKER_BINARY} ./cmd/api
 	@echo "Done!"
 
+## build_broker_prod: builds the broker binary as a linux executable
+build_broker_prod:
+	@echo "Building PRODUCTION broker binary..."
+	cd ../broker-service && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${BROKER_PRODUCTION_BINARY} ./cmd/api
+	@echo "Done!"
+
 # build_logger: builds the logger binary as a linux executable
 build_logger:
 	@echo "Building logger binary..."
 	cd ../logger-service && env GOOS=linux CGO_ENABLED=0 go build -o ${LOGGER_BINARY} ./cmd/api
 	@echo "Done!"
 
+# build_logger_prod: builds the logger binary as a linux executable AMD64
+build_logger_prod:
+	@echo "Building PRODUCTION logger binary..."
+	cd ../logger-service && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${LOGGER_PRODUCTION_BINARY} ./cmd/api
+	@echo "Done!"
+
 # build_listener: builds the listener binary as a linux executable
 build_listener:
 	@echo "Building listener binary..."
 	cd ../listener-service && env GOOS=linux CGO_ENABLED=0 go build -o ${LISTENER_BINARY} .
+	@echo "Done!"
+
+# build_listener_prod: builds the listener binary as a linux executable AMD64
+build_listener_prod:
+	@echo "Building PRODUCTION listener binary..."
+	cd ../listener-service && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${LISTENER_PRODUCTION_BINARY} .
+	@echo "Done!"
+
+## build_auth: builds the auth binary as a linux executable
+build_auth:
+	@echo "Building auth binary..."
+	cd ../authentication-service && env GOOS=linux CGO_ENABLED=0 go build -o ${AUTH_BINARY} ./cmd/api
+	@echo "Done!"
+
+## build_auth: builds the auth binary as a linux executable AMD64
+build_auth_prod:
+	@echo "Building PRODUCTION auth binary..."
+	cd ../authentication-service && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${AUTH_PRODUCTION_BINARY} ./cmd/api
 	@echo "Done!"
 
 ## build_auth: builds the auth binary as a linux executable
@@ -56,16 +93,23 @@ build_mail:
 	cd ../mail-service && env GOOS=linux CGO_ENABLED=0 go build -o ${MAIL_BINARY} ./cmd/api
 	@echo "Done!"
 
-## build_front: builds the front end binary
+## build_mail_prod: builds the mail binary as a linux executable AMD64
+build_mail_prod:
+	@echo "Building PRODUCTION mail binary..."
+	cd ../mail-service && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${MAIL_PRODUCTION_BINARY} ./cmd/api
+	@echo "Done!"
+
+
+## build_front_prod: builds the front end binary
 build_front:
 	@echo "Building front end binary..."
 	cd ../front-end && env CGO_ENABLED=0 go build -o ${FRONT_END_BINARY} ./cmd/web
 	@echo "Done!"
 
-## build_front_linux: builds the front end binary
-build_front_linux:
-	@echo "Building front end linux binary..."
-	cd ../front-end && env GOOS=linux CGO_ENABLED=0 go build -o ${FRONT_BINARY} ./cmd/web
+## build_front_linux: builds the front end binary AMD64
+build_front_prod:
+	@echo "Building PRODUCTION front end linux binary..."
+	cd ../front-end && env GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${FRONT_PRODUCTION_BINARY} ./cmd/web
 	@echo "Done!"
 
 ## start: starts the front end

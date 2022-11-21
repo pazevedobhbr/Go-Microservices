@@ -2,7 +2,7 @@ version: '3'
 
 services:
   caddy:
-    image: pazevedo/micro-caddy-production:1.0.0
+    image: pazevedo/micro-caddy-production:1.0.1
     deploy:
       mode: replicated
       replicas: 1
@@ -17,7 +17,7 @@ services:
       - caddy_config:/config
 
   front-end:
-    image: pazevedo/front-end:1.0.4
+    image: pazevedo/front-end-production:1.0.1
     deploy:
       mode: replicated
       replicas: 1
@@ -25,19 +25,19 @@ services:
       BROKER_URL: "http://broker.pauloazevedo.co"
 
   broker-service:
-    image: pazevedo/broker-service:1.0.2
+    image: pazevedo/broker-service-production:1.0.0
     deploy:
       mode: replicated
       replicas: 1
 
   listener-service:
-    image: pazevedo/listener-service:1.0.0
+    image: pazevedo/listener-service-production:1.0.0
     deploy:
       mode: replicated
       replicas: 1
 
   authentication-service:
-    image: pazevedo/authentication-service:1.0.0
+    image: pazevedo/authentication-service-production:1.0.0
     deploy:
       mode: replicated
       replicas: 1
@@ -45,13 +45,13 @@ services:
       DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=3"
 
   logger-service:
-    image: pazevedo/logger-service:1.0.1
+    image: pazevedo/logger-service-production:1.0.0
     deploy:
       mode: replicated
       replicas: 1
 
   mail-service:
-    image: pazevedo/mail-service:1.0.0
+    image: pazevedo/mail-service-production:1.0.0
     deploy:
       mode: replicated
       replicas: 1
