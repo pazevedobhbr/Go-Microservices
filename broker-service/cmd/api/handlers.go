@@ -113,7 +113,8 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	jsonData, _ := json.MarshalIndent(a, "", "\t")
 
 	// call the service
-	request, err := http.NewRequest("POST", "http://authentication-service/authenticate", bytes.NewBuffer(jsonData))
+	authServiceURL := "http://authentication-service/authenticate"
+	request, err := http.NewRequest("POST", authServiceURL, bytes.NewBuffer(jsonData))
 	if err != nil {
 		app.errorJSON(w, err)
 		return
@@ -132,6 +133,7 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 		app.errorJSON(w, errors.New("invalid credentials"))
 		return
 	} else if response.StatusCode != http.StatusAccepted {
+		log.Println(err)
 		app.errorJSON(w, errors.New("error calling auth service"))
 		return
 	}

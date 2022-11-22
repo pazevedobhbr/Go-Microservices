@@ -2,7 +2,7 @@ version: '3'
 
 services:
   caddy:
-    image: pazevedo/micro-caddy-production:1.0.0
+    image: pazevedo/micro-caddy-production:1.0.2
     deploy:
       mode: replicated
       replicas: 1
@@ -22,10 +22,10 @@ services:
       mode: replicated
       replicas: 1
     environment:
-      BROKER_URL: "http://broker.pauloazevedo.co"
+      BROKER_URL: "https://broker.pauloazevedo.co"
 
   broker-service:
-    image: pazevedo/broker-service-production:1.0.0
+    image: pazevedo/broker-service-production:1.0.2
     deploy:
       mode: replicated
       replicas: 1
@@ -42,7 +42,7 @@ services:
       mode: replicated
       replicas: 1
     environment:
-      DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=3"
+      DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
 
   logger-service:
     image: pazevedo/logger-service-production:1.0.0
